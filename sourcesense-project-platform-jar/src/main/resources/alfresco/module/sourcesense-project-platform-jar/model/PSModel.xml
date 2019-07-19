@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Servier Custom model -->
+
+<!-- Note: This model is pre-configured to load at startup of the Repository. 
+	So, all custom types and aspects added here will automatically be registered -->
+
+<model name="ps:transformPDFModel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+
+	<!-- Optional meta-data about the model -->
+	<description>Transform PDF Model</description>
+	<author>Alfresco PS</author>
+	<version>1.0</version>
+
+	<!-- Introduction of new namespaces defined by this model -->
+	<namespaces>
+		<namespace uri="http://www.alfresco-ps.com/model/content/1.0"
+				   prefix="ps" />
+	</namespaces>
+
+	<!-- == ASPECTS == -->
+	<aspects>
+
+		<!-- Aspect to mark PDF files which has been transformed -->
+		<aspect name="ps:transformedPdfFile">
+			<title>Pdf file has been transformed</title>
+		</aspect>
+
+	</aspects>
+</model>

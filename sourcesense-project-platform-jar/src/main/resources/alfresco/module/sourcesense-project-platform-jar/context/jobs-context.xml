@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one or more
+    contributor license agreements.  See the NOTICE file distributed with
+    this work for additional information regarding copyright ownership.
+    The ASF licenses this file to You under the Apache License, Version 2.0
+    (the "License"); you may not use this file except in compliance with
+    the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+  <bean id="templateActionModelFactory"
+        class="org.alfresco.repo.action.scheduled.FreeMarkerWithLuceneExtensionsModelFactory">
+    <property name="serviceRegistry">
+      <ref bean="ServiceRegistry" />
+    </property>
+  </bean>
+
+  <bean id="runPdfGeneratorTemplateActionDefinition"
+        class="org.alfresco.repo.action.scheduled.SimpleTemplateActionDefinition">
+    <property name="actionName">
+      <value>run-pdf-generator</value>
+    </property>
+    <property name="parameterTemplates">
+      <map>
+        <!--<entry>
+          <key><value>simpleParam</value></key>
+          <value>Simple param value</value>
+        </entry>-->
+      </map>
+    </property>
+    <property name="templateActionModelFactory">
+      <ref bean="templateActionModelFactory" />
+    </property>
+    <property name="dictionaryService">
+      <ref bean="DictionaryService" />
+    </property>
+    <property name="actionService">
+      <ref bean="ActionService" />
+    </property>
+    <property name="templateService">
+      <ref bean="TemplateService" />
+    </property>
+  </bean>
+
+  <bean id="runPdfGeneratorCronJob"
+        class="org.alfresco.repo.action.scheduled.CronScheduledQueryBasedTemplateActionDefinition">
+    <property name="transactionMode">
+      <value>ISOLATED_TRANSACTIONS</value>
+    </property>
+    <property name="compensatingActionMode">
+      <value>IGNORE</value>
+    </property>
+    <property name="searchService">
+      <ref bean="SearchService" />
+    </property>
+    <property name="templateService">
+      <ref bean="TemplateService" />
+    </property>
+    <property name="queryLanguage">
+      <value>fts-alfresco</value>
+    </property>
+    <property name="stores">
+      <list>
+        <value>workspace://SpacesStore</value>
+      </list>
+    </property>
+    <property name="queryTemplate">
+      <value>cm:content.mimetype:application/pdf AND cm:modified:[NOW-1DAY TO NOW]</value>
+    </property>
+    <property name="cronExpression">
+      <value>0 * * * * ?</value>
+    </property>
+    <property name="jobName">
+      <value>RunPdfGeneratorJob</value>
+    </property>
+    <property name="jobGroup">
+      <value>AntexJobGroup</value>
+    </property>
+    <property name="triggerName">
+      <value>triggerRunPdfGenerator</value>
+    </property>
+    <property name="triggerGroup">
+      <value>AntexTriggers</value>
+    </property>
+    <property name="scheduler">
+      <ref bean="schedulerFactory" />
+    </property>
+    <property name="actionService">
+      <ref bean="ActionService" />
+    </property>
+    <property name="templateActionModelFactory">
+      <ref bean="templateActionModelFactory" />
+    </property>
+    <property name="templateActionDefinition">
+      <ref bean="runPdfGeneratorTemplateActionDefinition" />
+    </property>
+    <property name="transactionService">
+      <ref bean="TransactionService" />
+    </property>
+    <property name="runAsUser">
+      <value>System</value>
+    </property>
+  </bean>
+  
+</beans>

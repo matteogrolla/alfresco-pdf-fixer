@@ -1,0 +1,10 @@
+workspace://SpacesStore/59a3697d-2122-4b30-be70-cbf12db87df5
+cm:modified	d:datetime	19 lug 2019 10:14:15 GMT+0200 (CEST)
+
+query
+
+cm:content.mimetype:application/pdf AND cm:modified:[NOW-1DAY TO NOW]
+
+
+
+${scheduledjob.runPdfGenerator.cronexpression}

@@ -1,0 +1,6 @@
+/.idea/*
+/alf_data_dev/*
+/target/*
+/alfresco.log*
+/share.log*
+/solr.log*
