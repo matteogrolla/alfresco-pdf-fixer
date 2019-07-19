@@ -80,7 +80,7 @@
       <value>cm:content.mimetype:application/pdf AND cm:modified:[NOW-1DAY TO NOW]</value>
     </property>
     <property name="cronExpression">
-      <value>0 * * * * ?</value>
+      <value>${scheduledjob.runPdfGenerator.cronexpression}</value>
     </property>
     <property name="jobName">
       <value>RunPdfGeneratorJob</value>
