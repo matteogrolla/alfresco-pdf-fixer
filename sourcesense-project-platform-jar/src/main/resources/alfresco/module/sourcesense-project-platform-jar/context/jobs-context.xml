@@ -77,7 +77,7 @@
       </list>
     </property>
     <property name="queryTemplate">
-      <value>cm:content.mimetype:application/pdf AND cm:modified:[NOW-1DAY TO NOW]</value>
+      <value>cm:content.mimetype:application/pdf AND !ASPECT:"ps:transformedPdfFile"</value>
     </property>
     <property name="cronExpression">
       <value>${scheduledjob.runPdfGenerator.cronexpression}</value>
